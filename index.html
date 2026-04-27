@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1024" />
+  <title>Adarsha | Software Developer Portfolio</title>
+  <meta name="description" content="Software Developer portfolio: projects, skills, experience, and contact." />
+  <style>
+    :root{
+      color-scheme: dark;
+      --bg0:#070a12;
+      --bg1:#0b1020;
+      --card:#0e1730cc;
+      --stroke:#24325c;
+      --text:#eaf0ff;
+      --muted:#b7c2e6;
+      --accent:#22d3ee;
+      --accent2:#a78bfa;
+      --good:#22c55e;
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
+      --radius: 18px;
+      --max: 1100px;
+    }
+    *{ padding:0; margin:0; box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1200px 800px at 15% 10%, rgba(167,139,250,.18), transparent 60%),
+        radial-gradient(1000px 700px at 85% 0%, rgba(34,211,238,.14), transparent 55%),
+        radial-gradient(1000px 800px at 70% 100%, rgba(34,197,94,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      color: var(--text);
+      line-height: 1.55;
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before,
+    body::after{
+      content: "";
+      position: fixed;
+      inset: -12%;
+      pointer-events: none;
+      z-index: -2;
+      filter: blur(40px);
+      opacity: .5;
+      animation: drift 20s ease-in-out infinite alternate;
+    }
+    body::before{
+      background:
+        radial-gradient(circle at 20% 20%, rgba(34,211,238,.28), transparent 40%),
+        radial-gradient(circle at 75% 30%, rgba(167,139,250,.26), transparent 42%),
+        radial-gradient(circle at 60% 78%, rgba(34,197,94,.20), transparent 40%);
+    }
+    body::after{
+      z-index: -1;
+      opacity: .22;
+      filter: blur(0px);
+      background-image:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 64px 64px, 64px 64px;
+      mask-image: radial-gradient(circle at center, black 30%, transparent 85%);
+      animation: gridShift 28s linear infinite;
+    }
+    a{ color: inherit; text-decoration: none; }
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+    .bg-particles{
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .particle{
+      position: absolute;
+      bottom: -80px;
+      width: var(--size, 10px);
+      height: var(--size, 10px);
+      left: var(--left, 50%);
+      border-radius: 999px;
+      background: radial-gradient(circle at 35% 35%, rgba(255,255,255,.9), rgba(34,211,238,.25) 45%, rgba(34,211,238,0) 70%);
+      opacity: .28;
+      animation: floatUp var(--dur, 16s) linear infinite;
+      animation-delay: var(--delay, 0s);
+      filter: blur(.2px);
+    }
+
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(7,10,18,.86), rgba(7,10,18,.58));
+      border-bottom: 1px solid rgba(36,50,92,.55);
+    }
+    nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 0;
+      gap: 12px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      font-weight: 750;
+      letter-spacing: .3px;
+    }
+    .brand-badge{
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--accent2), var(--accent), var(--good));
+      box-shadow: 0 10px 30px rgba(34,211,238,.18);
+    }
+    .navlinks{
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .navlinks a{
+      padding: 10px 12px;
+      border-radius: 12px;
+      color: var(--muted);
+      border: 1px solid transparent;
+    }
+    .navlinks a:hover{
+      color: var(--text);
+      border-color: rgba(36,50,92,.65);
+      background: rgba(14,23,48,.55);
+    }
+    .navlinks a.active{
+      color: var(--text);
+      border-color: rgba(34,211,238,.55);
+      background: rgba(34,211,238,.10);
+    }
+
+    .hero{ padding: 54px 0 20px; }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 22px;
+      align-items: center;
+    }
+    .pillrow{ display:flex; flex-wrap:wrap; gap: 10px; margin-bottom: 14px;}
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 8px 12px;
+      background: rgba(14,23,48,.55);
+      border: 1px solid rgba(36,50,92,.65);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+    .title{
+      font-size: clamp(2.0rem, 3.5vw, 3.4rem);
+      line-height: 1.08;
+      letter-spacing: -.6px;
+      background: linear-gradient(90deg, #eaf0ff, #22d3ee, #a78bfa, #eaf0ff);
+      background-size: 240% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: titleFlow 12s linear infinite;
+    }
+    .title-text{
+      display: inline;
+      white-space: pre-wrap;
+    }
+    .title-text::after{
+      content: "";
+      display: inline-block;
+      width: 2px;
+      height: 0.95em;
+      margin-left: 6px;
+      vertical-align: -0.08em;
+      background: rgba(234,240,255,.9);
+      animation: caretBlink .8s steps(1) infinite;
+    }
+    .subtitle{
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 1.07rem;
+      max-width: 62ch;
+    }
+    .cta{
+      margin-top: 20px;
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn{
+      position: relative;
+      overflow: hidden;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(36,50,92,.7);
+      background: rgba(14,23,48,.55);
+      color: var(--text);
+      cursor: pointer;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(34,211,238,.55); }
+    .btn-primary{
+      border-color: rgba(34,211,238,.55);
+      background: linear-gradient(135deg, rgba(34,211,238,.16), rgba(167,139,250,.12));
+    }
+    .btn-primary::after{
+      content: "";
+      position: absolute;
+      top: -30%;
+      left: -120%;
+      width: 70%;
+      height: 160%;
+      background: linear-gradient(100deg, rgba(255,255,255,0) 10%, rgba(255,255,255,.35) 50%, rgba(255,255,255,0) 90%);
+      transform: skewX(-20deg);
+      animation: buttonShine 3.6s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .btn small{ color: var(--muted); font-size: .88rem; }
+
+    .avatarCard{
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(14,23,48,.62), rgba(14,23,48,.28));
+      border: 1px solid rgba(36,50,92,.7);
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+    .avatar{
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid rgba(36,50,92,.7);
+      background: rgba(255,255,255,.02);
+    }
+    .avatarMeta{ margin-top: 12px; display:grid; gap: 8px; }
+    .metaLine{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(36,50,92,.7);
+      background: rgba(14,23,48,.55);
+      color: var(--muted);
+      font-size: .92rem;
+      white-space: nowrap;
+    }
+
+    main{ padding-bottom: 64px; }
+    section{ padding: 44px 0; }
+    .sectionHead{
+      display:flex;
+      align-items:flex-end;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+    .sectionHead h2{
+      font-size: 1.45rem;
+      letter-spacing: -.2px;
+    }
+    .sectionHead p{ color: var(--muted); max-width: 65ch; }
+
+    .grid3{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .grid2{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .card{
+      border-radius: var(--radius);
+      background: rgba(14,23,48,.5);
+      border: 1px solid rgba(36,50,92,.7);
+      box-shadow: 0 18px 40px rgba(0,0,0,.18);
+      padding: 16px;
+    }
+    .card h3{ font-size: 1.05rem; margin-bottom: 8px; }
+    .card p{ color: var(--muted); }
+    .chiprow{ margin-top: 12px; display:flex; flex-wrap:wrap; gap: 8px;}
+    .chip{
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(36,50,92,.7);
+      background: rgba(7,10,18,.35);
+      color: var(--muted);
+      font-size: .9rem;
+    }
+    .metric{
+      display:flex;
+      gap: 12px;
+      align-items:center;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(36,50,92,.7);
+      background: rgba(7,10,18,.30);
+      margin-top: 14px;
+    }
+    .metric b{ font-size: 1.12rem; }
+    .metric span{ color: var(--muted); }
+
+    .timeline{ display:grid; gap: 12px; }
+    .tlItem{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: start;
+    }
+    .tlItem .when{ color: var(--muted); font-size: .95rem; white-space: nowrap; }
+    .tlItem ul{ margin-top: 8px; margin-left: 18px; color: var(--muted); }
+    .tlItem li{ margin: 6px 0; }
+
+    .contactGrid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 14px;
+      align-items: start;
+    }
+    form{ display:grid; gap: 10px; }
+    label{ color: var(--muted); font-size: .95rem; }
+    input, textarea{
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      background: rgba(7,10,18,.40);
+      border: 1px solid rgba(36,50,92,.75);
+      color: var(--text);
+      outline: none;
+    }
+    textarea{ min-height: 120px; resize: vertical; }
+    input:focus, textarea:focus{ border-color: rgba(34,211,238,.55); }
+    input.invalid, textarea.invalid{ border-color: #ef4444; }
+    .fineprint{ color: var(--muted); font-size: .92rem; }
+    footer{
+      border-top: 1px solid rgba(36,50,92,.55);
+      background: rgba(7,10,18,.72);
+      padding: 22px 0;
+      color: var(--muted);
+    }
+    .footerRow{
+      display:flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .social{ display:flex; gap: 10px; flex-wrap: wrap; }
+    .icon{ width: 18px; height: 18px; display:inline-block; }
+    .srOnly{
+      position:absolute;
+      width:1px; height:1px;
+      padding:0; margin:-1px;
+      overflow:hidden;
+      clip:rect(0,0,0,0);
+      white-space:nowrap; border:0;
+    }
+    .toast{
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 100;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(36,50,92,.8);
+      background: rgba(7,10,18,.95);
+      color: var(--text);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .2s ease, transform .2s ease;
+      pointer-events: none;
+    }
+    .toast.show{
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal{
+      opacity: 0;
+      transform: translateY(22px) scale(.985);
+      transition: opacity .6s ease, transform .6s ease;
+      will-change: opacity, transform;
+    }
+    .reveal.in{
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    @keyframes titleFlow{
+      0%{ background-position: 0% 50%; }
+      100%{ background-position: 240% 50%; }
+    }
+    @keyframes caretBlink{
+      0%, 45%{ opacity: 1; }
+      50%, 100%{ opacity: 0; }
+    }
+    @keyframes buttonShine{
+      0%, 30%{
+        left: -120%;
+      }
+      60%, 100%{
+        left: 160%;
+      }
+    }
+      @keyframes drift{
+      0%{
+        transform: translate3d(-2%, -1.5%, 0) scale(1) rotate(0deg);
+      }
+      50%{
+        transform: translate3d(2.2%, 1.2%, 0) scale(1.04) rotate(3deg);
+      }
+      100%{
+        transform: translate3d(-1%, 2.5%, 0) scale(1.02) rotate(-2deg);
+      }
+    }
+    @keyframes gridShift{
+      from{
+        transform: translate3d(0, 0, 0);
+      }
+      to{
+        transform: translate3d(-64px, -64px, 0);
+      }
+    }
+    @keyframes floatUp{
+      0%{
+        transform: translate3d(0, 0, 0) scale(.9);
+        opacity: 0;
+      }
+      10%{ opacity: .3; }
+      50%{
+        transform: translate3d(14px, -48vh, 0) scale(1.05);
+      }
+      100%{
+        transform: translate3d(-18px, -110vh, 0) scale(.95);
+        opacity: 0;
+      }
+    }
+    @media (max-width: 920px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .contactGrid{ grid-template-columns: 1fr; }
+      .grid3{ grid-template-columns: 1fr; }
+      .grid2{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px){
+      .wrap{ padding: 0 14px; }
+      nav{ align-items: flex-start; }
+      .brand{ font-size: .95rem; }
+      .navlinks{
+        width: 100%;
+        justify-content: flex-start;
+        gap: 8px;
+      }
+      .navlinks a{
+        padding: 8px 10px;
+        font-size: .9rem;
+      }
+      .hero{ padding: 34px 0 12px; }
+      .title{
+        font-size: clamp(1.55rem, 8vw, 2rem);
+        line-height: 1.2;
+      }
+      .subtitle{ font-size: .96rem; }
+      .cta{ gap: 8px; }
+      .cta .btn{
+        width: 100%;
+        justify-content: center;
+      }
+      section{ padding: 30px 0; }
+      .sectionHead h2{ font-size: 1.2rem; }
+      .sectionHead p{ font-size: .95rem; }
+      .card{ padding: 13px; }
+      .metric{
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .chiprow .chip,
+      .chiprow .btn{
+        font-size: .86rem;
+      }
+      input, textarea{
+        font-size: 16px;
+      }
+      .footerRow{
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-particles" aria-hidden="true">
+    <span class="particle" style="--left:4%;--size:8px;--dur:18s;--delay:-3s"></span>
+    <span class="particle" style="--left:12%;--size:11px;--dur:22s;--delay:-8s"></span>
+    <span class="particle" style="--left:20%;--size:7px;--dur:17s;--delay:-12s"></span>
+    <span class="particle" style="--left:28%;--size:10px;--dur:24s;--delay:-2s"></span>
+    <span class="particle" style="--left:36%;--size:9px;--dur:19s;--delay:-10s"></span>
+    <span class="particle" style="--left:44%;--size:12px;--dur:23s;--delay:-6s"></span>
+    <span class="particle" style="--left:52%;--size:8px;--dur:16s;--delay:-14s"></span>
+    <span class="particle" style="--left:60%;--size:10px;--dur:21s;--delay:-4s"></span>
+    <span class="particle" style="--left:68%;--size:7px;--dur:18s;--delay:-9s"></span>
+    <span class="particle" style="--left:76%;--size:11px;--dur:20s;--delay:-11s"></span>
+    <span class="particle" style="--left:84%;--size:9px;--dur:25s;--delay:-5s"></span>
+    <span class="particle" style="--left:92%;--size:8px;--dur:19s;--delay:-13s"></span>
+  </div>
+  <header>
+    <div class="wrap">
+      <nav aria-label="Primary">
+        <a class="brand" href="#top">
+          <span class="brand-badge" aria-hidden="true"></span>
+          <span>ADARSHA<span class="srOnly"> — Software Developer</span></span>
+        </a>
+        <div class="navlinks">
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#projects">Projects</a>
+          <a href="#experience">Experience</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <div class="pillrow">
+              <span class="pill">Open to internships / junior roles</span>
+              <span class="pill">Frontend • Backend • Problem Solving</span>
+            </div>
+            <h1 class="title"><span id="animatedTitle" class="title-text">Software Developer building fast, clean, user‑friendly products.</span></h1>
+            <p class="subtitle">
+              I’m <b>Adarsha</b> — I build responsive web apps, APIs, and projects that focus on performance, good UX, and maintainable code.
+              This is a long-form portfolio with my skills, projects, and contact links.
+            </p>
+            <div class="cta">
+          
+              <a class="btn" href="image.png" id="downloadResumeBtn" target="_blank" rel="noreferrer noopener">Download Resume <small>(PDF)</small></a>
+            </div>
+
+            <div class="metric" role="note" aria-label="Highlights">
+              <div>
+                <b>Strengths</b><br/>
+                <span>HTML/CSS • JavaScript • UI • Basics of DSA</span>
+              </div>
+              <div>
+                <b>Focus</b><br/>
+                <span>Projects • Internships • Real-world practice</span>
+              </div>
+            </div>
+          </div>
+
+          <aside class="avatarCard" aria-label="Profile card">
+            <img
+              class="avatar"
+              src="file:///C:/Users/karth/Downloads/1771396423906.png"
+              data-fallback-src="assets/avatar.svg"
+              alt="Adarsha profile photo"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="avatarMeta">
+              <div class="metaLine">
+                <span class="tag">📍 India</span>
+                <span class="tag">⚡ Available</span>
+              </div>
+              <div class="metaLine">
+                <span>Primary stack</span>
+                <span><b>JS • HTML • CSS</b></span>
+              </div>
+              <div class="metaLine">
+                <span>Learning</span>
+                <span><b>React • Node</b></span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="sectionHead">
+          <div>
+            <h2>About</h2>
+            <p>
+              I like building products that feel simple to use and easy to maintain. I care about clean UI, good structure, and shipping.
+            </p>
+          </div>
+        </div>
+        <div class="grid3">
+          <div class="card">
+            <h3>What I do</h3>
+            <p>Build responsive UIs, interactive pages, and small web apps with a focus on usability and speed.</p>
+            <div class="chiprow">
+              <span class="chip">Responsive design</span>
+              <span class="chip">Accessible UI</span>
+              <span class="chip">Clean layouts</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>How I work</h3>
+            <p>Start with a clear goal, keep the UI consistent, and iterate fast with real testing (mobile + desktop).</p>
+            <div class="chiprow">
+              <span class="chip">Readable code</span>
+              <span class="chip">Reusable components</span>
+              <span class="chip">Performance</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>What I’m looking for</h3>
+            <p>Internships or junior roles where I can learn, contribute, and build real features with a team.</p>
+            <div class="chiprow">
+              <span class="chip">Internship</span>
+              <span class="chip">Junior Dev</span>
+              <span class="chip">Mentorship</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="wrap">
+        <div class="sectionHead">
+          <div>
+            <h2>Skills</h2>
+            <p>A practical skill set for building web interfaces and learning full‑stack step-by-step.</p>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <h3>Frontend</h3>
+            <p>HTML, CSS, JavaScript, responsive layouts, animations, forms, DOM, basic accessibility.</p>
+            <div class="chiprow">
+              <span class="chip">HTML5</span>
+              <span class="chip">CSS3</span>
+              <span class="chip">JavaScript</span>
+              <span class="chip">Flexbox/Grid</span>
+              <span class="chip">Responsive</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Backend / Tools </h3>
+            <p>Basics of Node.js, Git/GitHub, and deployment. Comfortable learning frameworks quickly.</p>
+            <div class="chiprow">
+              <span class="chip">Git</span>
+              <span class="chip">GitHub</span>
+              <span class="chip">Node.js</span>
+              <span class="chip">APIs</span>
+              <span class="chip">Deploy</span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Database</h3>
+            <p>Basics of Node.js, Git/GitHub, and deployment. Comfortable learning frameworks quickly.</p>
+            <div class="chiprow">
+              <span class="chip">Git</span>
+              <span class="chip">GitHub</span>
+              <span class="chip">Node.js</span>
+              <span class="chip">APIs</span>
+              <span class="chip">Deploy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="wrap">
+        <div class="sectionHead">
+          <div>
+            <h2>Projects</h2>
+            </div>
+        </div>
+        <div class="grid3">
+          <article class="card">
+            <h3>Expense.Management Tracker</h3>
+            <p>An expense management tracker is a system used to record and monitor daily expenses efficiently. 
+            It helps users store details like date, amount, and category of spending in an organized way.
+             The main purpose is to track income and expenses to maintain better financial control. 
+             It also allows users to set budgets and analyze spending patterns to reduce unnecessary costs. 
+             Overall, it helps individuals and businesses manage money wisely and improve financial planning.</p>
+            <div class="chiprow">
+              <span class="chip">PHP</span><span class="chip">JavaScript</span><span class="chip">CSS</span>
+            </div>
+            <div class="cta" style="margin-top:12px;">
+              <br>
+              <a class="btn" href="https://github.com/Adarshidlapura/ExpenseManagement.git" aria-disabled="true">Code</a>
+            </div>
+          </article>
+          <article class="card">
+            <h3>JOB HIRING AND APPLYING WEB APP</h3>
+            <p>A Job Hiring and Applying Web App is an online platform that connects job seekers with employers efficiently. 
+            It allows users to create profiles, upload resumes, and search for jobs based on skills, location, and preferences. 
+            Employers can post job openings. The system simplifies the recruitment process by providing features like notifications, application tracking, and communication tools. 
+            Overall, it saves time, improves accessibility, and makes hiring and job searching more effective.</p>
+            <div class="chiprow">
+              <span class="chip">JavaScript</span><span class="chip">API</span><span class="chip">UI</span>
+            </div>
+            <div class="cta" style="margin-top:12px;">
+              <a class="btn" href="#">Live</a>
+              <a class="btn" href="https://github.com/Asabhi852/Careerflow.git">Code</a>
+            </div>
+          </article>
+          <article class="card">
+            <h3>Project #3 (Add yours)</h3>
+            <p>Example: Responsive landing page with animations and form validation.</p>
+            <div class="chiprow">
+              <span class="chip">TYPESCRIPT</span><span class="chip">Animations</span><span class="chip">Forms</span>
+            </div>
+            <div class="cta" style="margin-top:12px;">
+              <a class="btn" href="#">Live</a>
+              <a class="btn" href="#">Code</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="wrap">
+        <div class="sectionHead">
+          <div>
+            <h2>Experience</h2>
+            <p>Add internships, freelancing, training, or strong self-project experience. Keep it impact-focused.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="timeline">
+            <div class="tlItem">
+              <div>
+                <h3>Self Projects / Training</h3>
+                <p class="fineprint">Built multiple UI pages and practiced JavaScript fundamentals.</p>
+                <ul>
+                  <li>Created responsive pages using Flexbox/Grid and consistent spacing/typography.</li>
+                  <li>Improved form UI and validation patterns.</li>
+                  <li>Used Git for version control and iteration.</li>
+                </ul>
+              </div>
+              <div class="when">2025 — 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="sectionHead">
+          <div>
+            <h2>Contact</h2>
+            <p>Send a message or connect on socials. This form opens your email app (works without a backend).</p>
+          </div>
+        </div>
+
+        <div class="contactGrid">
+          <div class="card">
+            <h3>Send a message</h3>
+            <p class="fineprint" style="margin-top:6px;">Tip: update the email in the button below.</p>
+            <form id="contactForm">
+              <div>
+                <label for="name">Adarsha</label>
+                <input id="name" name="name" placeholder="Your name" required />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="you@example.com" required />
+              </div>
+              <div>
+                <label for="msg">Message</label>
+                <textarea id="msg" name="msg" placeholder="Write your message..." required></textarea>
+              </div>
+              <button class="btn btn-primary" type="submit">Send Email</button>
+              <div class="fineprint">No backend needed — it uses <code>mailto:</code>.</div>
+            </form>
+          </div>
+
+          <div class="card">
+            <h3>Links</h3>
+            <p class="fineprint" style="margin-top:6px;">Update these with your real profiles.</p>
+            <div class="chiprow">
+              <a class="btn" href="https://github.com/Adarshidlapura" target="_blank" rel="noreferrer noopener">
+                <span class="icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M12 .5C5.73.5.75 5.7.75 12.2c0 5.2 3.44 9.6 8.2 11.16.6.12.82-.27.82-.6v-2.1c-3.34.75-4.04-1.67-4.04-1.67-.55-1.43-1.34-1.8-1.34-1.8-1.1-.78.08-.76.08-.76 1.2.09 1.84 1.3 1.84 1.3 1.08 1.93 2.84 1.37 3.54 1.05.11-.82.41-1.37.75-1.68-2.67-.31-5.48-1.4-5.48-6.22 0-1.37.46-2.5 1.23-3.38-.12-.31-.53-1.57.12-3.27 0 0 1.01-.33 3.3 1.29.95-.27 1.97-.4 2.98-.41 1.01.01 2.03.14 2.98.41 2.28-1.62 3.29-1.29 3.29-1.29.65 1.7.24 2.96.12 3.27.76.88 1.23 2.01 1.23 3.38 0 4.83-2.81 5.91-5.49 6.22.42.38.8 1.14.8 2.3v3.4c0 .34.22.73.83.6 4.76-1.56 8.19-5.95 8.19-11.16C23.25 5.7 18.27.5 12 .5z"/>
+                  </svg>
+                </span>
+                GitHub
+              </a>
+              <a class="btn" href="https://www.linkedin.com/" target="_blank" rel="noreferrer noopener">
+                <span class="icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 23.5h4V7.5h-4v16zM8.5 7.5h3.8v2.2h.05c.53-1 1.84-2.2 3.78-2.2 4.04 0 4.79 2.7 4.79 6.2v9.8h-4v-8.7c0-2.08-.04-4.76-2.9-4.76-2.9 0-3.34 2.3-3.34 4.6v8.86h-4v-16z"/>
+                  </svg>
+                </span>
+                LinkedIn
+              </a>
+              <a class="btn" href="https://www.instagram.com/" target="_blank" rel="noreferrer noopener">
+                <span class="icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                    <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm8.5 2h-8.5A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.5-.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0z"/>
+                  </svg>
+                </span>
+                Instagram
+              </a>
+            </div>
+            <div class="metric" style="margin-top:14px;">
+              <div>
+                <b>Email</b><br/>
+                <span id="emailText">adarshidlapura@gmail.com</span>
+              </div>
+              <div>
+                <b>Phone</b><br/>
+                <span>+91 91645 05011</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footerRow">
+        <div>© <span id="year"></span> Adarsha. All rights reserved.</div>
+        <div class="social">
+          <a href="#top" class="tag">Back to top</a>
+          <a class="tag" href="#projects">Projects</a>
+          <a class="tag" href="#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const emailTo = "adarshidlapura@gmail.com";
+      const yearEl = document.getElementById("year");
+      const emailTextEl = document.getElementById("emailText");
+      const contactForm = document.getElementById("contactForm");
+      const profileImage = document.querySelector(".avatar");
+      const animatedTitle = document.getElementById("animatedTitle");
+      const navLinks = Array.from(document.querySelectorAll(".navlinks a[href^='#']"));
+      const sections = navLinks
+        .map((link) => document.querySelector(link.getAttribute("href")))
+        .filter(Boolean);
+
+      if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+      if (emailTextEl) emailTextEl.textContent = emailTo;
+
+      if (animatedTitle) {
+        const fullText = animatedTitle.textContent || "";
+        let index = 0;
+        animatedTitle.textContent = "";
+        const typingTimer = window.setInterval(() => {
+          index += 1;
+          animatedTitle.textContent = fullText.slice(0, index);
+          if (index >= fullText.length) {
+            window.clearInterval(typingTimer);
+          }
+        }, 95);
+      }
+
+      const showToast = (message) => {
+        let toast = document.getElementById("toast");
+        if (!toast) {
+          toast = document.createElement("div");
+          toast.id = "toast";
+          toast.className = "toast";
+          document.body.appendChild(toast);
+        }
+        toast.textContent = message;
+        toast.classList.add("show");
+        window.clearTimeout(showToast.timerId);
+        showToast.timerId = window.setTimeout(() => {
+          toast.classList.remove("show");
+        }, 1800);
+      };
+
+      if (profileImage) {
+        profileImage.addEventListener("error", () => {
+          const fallbackSrc = profileImage.dataset.fallbackSrc;
+          if (!fallbackSrc) return;
+          if (profileImage.src.includes(fallbackSrc)) return;
+          profileImage.src = fallbackSrc;
+          showToast("Primary image not found. Loaded fallback avatar.");
+        }, { once: true });
+      }
+
+      const setActiveNav = (id) => {
+        navLinks.forEach((link) => {
+          const isActive = link.getAttribute("href") === `#${id}`;
+          link.classList.toggle("active", isActive);
+          link.setAttribute("aria-current", isActive ? "page" : "false");
+        });
+      };
+
+      if ("IntersectionObserver" in window && sections.length) {
+        const observer = new IntersectionObserver((entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (visible?.target?.id) setActiveNav(visible.target.id);
+        }, { threshold: [0.3, 0.5, 0.7], rootMargin: "-20% 0px -55% 0px" });
+
+        sections.forEach((section) => observer.observe(section));
+      }
+
+      const revealTargets = document.querySelectorAll(".sectionHead, .card, .metric");
+      revealTargets.forEach((el) => el.classList.add("reveal"));
+
+      if ("IntersectionObserver" in window && revealTargets.length) {
+        const revealObserver = new IntersectionObserver((entries, obs) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add("in");
+            obs.unobserve(entry.target);
+          });
+        }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+
+        revealTargets.forEach((el) => revealObserver.observe(el));
+      } else {
+        revealTargets.forEach((el) => el.classList.add("in"));
+      }
+
+      if (contactForm) {
+        contactForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          const nameInput = document.getElementById("name");
+          const emailInput = document.getElementById("email");
+          const msgInput = document.getElementById("msg");
+          const fields = [nameInput, emailInput, msgInput].filter(Boolean);
+          fields.forEach((field) => field.classList.remove("invalid"));
+
+          const name = nameInput?.value.trim() || "";
+          const email = emailInput?.value.trim() || "";
+          const msg = msgInput?.value.trim() || "";
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+          const invalidFields = [];
+          if (name.length < 2) invalidFields.push(nameInput);
+          if (!emailRegex.test(email)) invalidFields.push(emailInput);
+          if (msg.length < 10) invalidFields.push(msgInput);
+
+          if (invalidFields.length) {
+            invalidFields.forEach((field) => field?.classList.add("invalid"));
+            invalidFields[0]?.focus();
+            showToast("Please fill valid name, email, and message.");
+            return;
+          }
+
+          const subject = encodeURIComponent(`Portfolio contact from ${name}`);
+          const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${msg}`);
+          window.location.href = `mailto:${emailTo}?subject=${subject}&body=${body}`;
+          showToast("Opening your email app...");
+          contactForm.reset();
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

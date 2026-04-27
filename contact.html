@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact | Adarsha</title>
+  <meta name="description" content="Contact Adarsha for software development opportunities." />
+  <style>
+    :root{
+      color-scheme: dark;
+      --bg0:#070a12;
+      --bg1:#0b1020;
+      --text:#eaf0ff;
+      --muted:#b7c2e6;
+      --stroke:#24325c;
+      --accent:#22d3ee;
+      --card: rgba(14,23,48,.55);
+      --radius: 18px;
+      --max: 960px;
+    }
+    *{ box-sizing: border-box; margin: 0; padding: 0; }
+    body{
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(900px 600px at 10% 0%, rgba(167,139,250,.18), transparent 60%),
+        radial-gradient(1000px 700px at 100% 20%, rgba(34,211,238,.14), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.55;
+    }
+    .wrap{ max-width: var(--max); margin: 0 auto; padding: 18px; }
+    .topbar{
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+      margin-bottom: 18px;
+    }
+    a{ color: inherit; text-decoration: none; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding: 10px 13px; border-radius: 12px;
+      border: 1px solid rgba(36,50,92,.7);
+      background: rgba(14,23,48,.55); color: var(--text);
+    }
+    .btn:hover{ border-color: rgba(34,211,238,.55); }
+    .card{
+      border-radius: var(--radius);
+      background: var(--card);
+      border: 1px solid rgba(36,50,92,.75);
+      box-shadow: 0 18px 40px rgba(0,0,0,.2);
+      padding: 18px;
+    }
+    h1{ font-size: clamp(1.7rem, 3vw, 2.2rem); margin-bottom: 6px; }
+    p{ color: var(--muted); }
+    .grid{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 14px;
+    }
+    form{ display:grid; gap: 10px; margin-top: 12px; }
+    label{ color: var(--muted); font-size: .95rem; }
+    input, textarea{
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(36,50,92,.75);
+      background: rgba(7,10,18,.38);
+      color: var(--text);
+      outline: none;
+    }
+    input:focus, textarea:focus{ border-color: rgba(34,211,238,.55); }
+    input.invalid, textarea.invalid{ border-color: #ef4444; }
+    textarea{ min-height: 120px; resize: vertical; }
+    .chiprow{ margin-top: 12px; display:flex; flex-wrap:wrap; gap: 8px; }
+    .chip{
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(36,50,92,.7);
+      background: rgba(7,10,18,.35);
+      color: var(--muted);
+      font-size: .92rem;
+    }
+    .fine{ margin-top: 8px; font-size: .92rem; color: var(--muted); }
+    .toast{
+      position: fixed; right: 16px; bottom: 16px;
+      background: rgba(7,10,18,.95); color: var(--text);
+      border: 1px solid rgba(36,50,92,.8);
+      border-radius: 10px; padding: 9px 12px;
+      opacity: 0; transform: translateY(8px);
+      transition: opacity .2s ease, transform .2s ease;
+      pointer-events: none;
+    }
+    .toast.show{ opacity: 1; transform: translateY(0); }
+    @media (max-width: 860px){ .grid{ grid-template-columns: 1fr; } }
+    @media (max-width: 640px){
+      .wrap{ padding: 14px; }
+      .topbar{
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .topbar .btn{
+        width: 100%;
+        justify-content: center;
+      }
+      .card{ padding: 14px; }
+      h1{ font-size: 1.55rem; }
+      input, textarea{ font-size: 16px; }
+      .chiprow{ gap: 6px; }
+      .chip{ font-size: .86rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <a class="btn" href="index.html">← Back to Portfolio</a>
+      <a class="btn" href="index.html#contact">Main Contact Section</a>
+    </div>
+
+    <section class="card">
+      <h1>Contact Me</h1>
+      <p>Let’s connect for internships, junior software roles, or project collaboration.</p>
+      <div class="grid">
+        <div class="card">
+          <h2>Send a message</h2>
+          <form id="contactForm">
+            <div>
+              <label for="name">Name</label>
+              <input id="name" name="name" placeholder="Your name" required />
+            </div>
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="you@example.com" required />
+            </div>
+            <div>
+              <label for="msg">Message</label>
+              <textarea id="msg" name="msg" placeholder="Write your message..." required></textarea>
+            </div>
+            <button class="btn" type="submit">Send Email</button>
+            <p class="fine">This uses your default email app via <code>mailto:</code>.</p>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>Details</h2>
+          <div class="chiprow">
+            <span class="chip">Email: adarshidlapura@gmail.com</span>
+            <span class="chip">Phone: +91 91645 05011</span>
+            <a class="chip" href="https://github.com/Adarshidlapura" target="_blank" rel="noreferrer noopener">GitHub</a>
+            <a class="chip" href="https://www.linkedin.com/" target="_blank" rel="noreferrer noopener">LinkedIn</a>
+            <a class="chip" href="https://www.instagram.com/" target="_blank" rel="noreferrer noopener">Instagram</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    (() => {
+      const to = "adarshidlapura@gmail.com";
+      const form = document.getElementById("contactForm");
+      const showToast = (message) => {
+        let toast = document.getElementById("toast");
+        if (!toast) {
+          toast = document.createElement("div");
+          toast.id = "toast";
+          toast.className = "toast";
+          document.body.appendChild(toast);
+        }
+        toast.textContent = message;
+        toast.classList.add("show");
+        window.clearTimeout(showToast.timerId);
+        showToast.timerId = window.setTimeout(() => toast.classList.remove("show"), 1700);
+      };
+
+      form?.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const nameEl = document.getElementById("name");
+        const emailEl = document.getElementById("email");
+        const msgEl = document.getElementById("msg");
+        const fields = [nameEl, emailEl, msgEl].filter(Boolean);
+        fields.forEach((f) => f.classList.remove("invalid"));
+
+        const name = nameEl.value.trim();
+        const email = emailEl.value.trim();
+        const msg = msgEl.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        const invalid = [];
+        if (name.length < 2) invalid.push(nameEl);
+        if (!emailRegex.test(email)) invalid.push(emailEl);
+        if (msg.length < 10) invalid.push(msgEl);
+        if (invalid.length) {
+          invalid.forEach((f) => f.classList.add("invalid"));
+          invalid[0].focus();
+          showToast("Please enter valid name, email, and message.");
+          return;
+        }
+
+        const subject = encodeURIComponent(`Portfolio contact from ${name}`);
+        const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${msg}`);
+        window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+        form.reset();
+        showToast("Opening your email app...");
+      });
+    })();
+  </script>
+</body>
+</html>
