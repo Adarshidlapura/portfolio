@@ -566,11 +566,12 @@
           <aside class="avatarCard" aria-label="Profile card">
             <img
               class="avatar"
-              src="file:///C:/Users/karth/Downloads/1771396423906.png"
-              data-fallback-src="assets/avatar.svg"
+              src="assets/avatar.svg"
+              data-fallback-src="https://api.dicebear.com/9.x/identicon/svg?seed=Adarsha"
               alt="Adarsha profile photo"
               loading="lazy"
               decoding="async"
+              onerror="this.onerror=null; this.src=this.dataset.fallbackSrc || 'https://api.dicebear.com/9.x/identicon/svg?seed=Adarsha';"
             />
             <div class="avatarMeta">
               <div class="metaLine">
@@ -893,6 +894,9 @@
       };
 
       if (profileImage) {
+        if (profileImage.complete && profileImage.naturalWidth === 0) {
+          profileImage.src = profileImage.dataset.fallbackSrc || "https://api.dicebear.com/9.x/identicon/svg?seed=Adarsha";
+        }
         profileImage.addEventListener("error", () => {
           const fallbackSrc = profileImage.dataset.fallbackSrc;
           if (!fallbackSrc) return;
